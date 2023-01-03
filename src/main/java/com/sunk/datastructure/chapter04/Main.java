@@ -3,11 +3,9 @@ package com.sunk.datastructure.chapter04;
 public class Main {
 
     public static void main(String[] args) {
-        testSingleLinkedList();
-
-        System.out.println("\n\n\n----------\n\n\n");
-
-        doubleLinkedListTest();
+        // testSingleLinkedList();
+        // doubleLinkedListTest();
+        circleSingleLinkedListTest();
     }
 
     /*
@@ -91,6 +89,15 @@ public class Main {
         System.out.println("============================");
         doubleLinkedList.deleteNode(3);
         doubleLinkedList.list();
+    }
+
+    public static void circleSingleLinkedListTest() {
+        final CircleSingleLinkedList circleSingleLinkedList = new CircleSingleLinkedList();
+        circleSingleLinkedList.addBoy(5);
+
+        // 打印环形链表
+        circleSingleLinkedList.list();
+
     }
 
 }
