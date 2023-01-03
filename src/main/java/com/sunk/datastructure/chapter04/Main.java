@@ -60,6 +60,11 @@ public class Main {
         // 3 打印链表
         System.out.println("====================");
         linkedList.list();
+
+        // 测试反转链表
+        System.out.println("====================");
+        linkedList.reverse();
+        linkedList.list();
     }
 
 }

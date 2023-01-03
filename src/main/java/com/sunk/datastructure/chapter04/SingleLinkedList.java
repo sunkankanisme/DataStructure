@@ -193,6 +193,39 @@ public class SingleLinkedList {
         }
     }
 
+    /*
+     * 实现链表的反转
+     */
+    public void reverse() {
+        // 当前链表如果为空，或者仅有一个节点则直接返回
+        if (head.next == null || head.next.next == null) {
+            return;
+        }
+
+        // 当前节点的变量
+        HeroNode curr = head.next;
+        // 当前节点的下一个节点的变量
+        HeroNode next = null;
+        // 新链表的头结点
+        HeroNode reverseHead = new HeroNode(0, "", "");
+
+        // 遍历当前链表，并完成链表的反转
+        while (curr != null) {
+            // 将下一个节点保存起来，防丢失
+            next = curr.next;
+
+            // 将当前节点插入到新链表的第一个位置
+            curr.next = reverseHead.next;
+            reverseHead.next = curr;
+
+            // 将当前节点指向下一个节点
+            curr = next;
+        }
+
+        // 将新链表的数据赋给原先的 Head 上
+        head.next = reverseHead.next;
+    }
+
 
     /*
      * 显示链表的元素
