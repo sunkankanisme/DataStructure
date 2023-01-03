@@ -65,6 +65,12 @@ public class Main {
         System.out.println("====================");
         linkedList.reverse();
         linkedList.list();
+
+        // 测试打印反转链表
+        System.out.println("==================== 反转1");
+        linkedList.reverseList();
+        System.out.println("==================== 反转2");
+        linkedList.reverseListIter(linkedList.firstNode());
     }
 
 }

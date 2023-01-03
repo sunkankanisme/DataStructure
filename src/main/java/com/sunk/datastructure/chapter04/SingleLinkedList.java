@@ -1,5 +1,7 @@
 package com.sunk.datastructure.chapter04;
 
+import java.util.Stack;
+
 /*
  * 定义一个链表来管理英雄任务
  */
@@ -224,6 +226,45 @@ public class SingleLinkedList {
 
         // 将新链表的数据赋给原先的 Head 上
         head.next = reverseHead.next;
+    }
+
+    /*
+     * 逆序打印链表，使用栈
+     */
+    public void reverseList() {
+        // 判断链表是否为空
+        if (head.next == null) {
+            System.out.println("链表为空");
+            return;
+        }
+
+        // 创建一个栈
+        final Stack<HeroNode> stack = new Stack<>();
+        HeroNode tmp = head.next;
+
+        // 将链表的所有节点压入栈
+        while (tmp != null) {
+            stack.push(tmp);
+            tmp = tmp.next;
+        }
+
+        // 打印中的元素
+        while (!stack.isEmpty()) {
+            System.out.println(stack.pop());
+        }
+    }
+
+    public void reverseListIter(HeroNode curr) {
+        if (curr == null) {
+            return;
+        }
+
+        reverseListIter(curr.next);
+        System.out.println(curr);
+    }
+
+    public HeroNode firstNode() {
+        return head.next;
     }
 
 
