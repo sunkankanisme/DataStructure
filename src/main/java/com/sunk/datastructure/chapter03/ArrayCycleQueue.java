@@ -1,16 +1,16 @@
-package com.sunk.datastructure.chapter02;
+package com.sunk.datastructure.chapter03;
 
-import java.util.Arrays;
 
-public class ArrayQueue {
+public class ArrayCycleQueue {
 
     public static void main(String[] args) {
-        final Queue queue = new Queue(3);
+        final CycleQueue queue = new CycleQueue(5);
         queue.addQueue(1);
         queue.addQueue(2);
         queue.addQueue(3);
         queue.addQueue(4);
         queue.printQueue();
+        System.out.println("============");
         final int queue1 = queue.getQueue();
         final int queue2 = queue.getQueue();
         final int queue3 = queue.getQueue();
@@ -19,9 +19,9 @@ public class ArrayQueue {
 
     }
 
-    static class Queue {
+    static class CycleQueue {
         // 队列的最大容量
-        private int maxSize;
+        private final int maxSize;
 
         // 队列头指针
         private int front;
@@ -30,23 +30,23 @@ public class ArrayQueue {
         private int rear;
 
         // 存储队列元素的数组
-        private int[] arr;
+        private final int[] arr;
 
         /*
          * 初始化队列
          */
-        public Queue(int arrMaxSize) {
+        public CycleQueue(int arrMaxSize) {
             this.maxSize = arrMaxSize;
             arr = new int[maxSize];
-            front = -1;
-            rear = -1;
+            front = 0;
+            rear = 0;
         }
 
         /*
          * 判断队列是否满
          */
         public boolean isFull() {
-            return rear == maxSize - 1;
+            return (rear + 1) % maxSize == front;
         }
 
         /*
@@ -65,8 +65,9 @@ public class ArrayQueue {
                 return;
             }
 
-            rear++;
             arr[rear] = n;
+            // 将 rear 后移，这里必须考虑取模
+            rear = (rear + 1) % maxSize;
         }
 
         /*
@@ -77,15 +78,29 @@ public class ArrayQueue {
                 throw new RuntimeException("队列为空，无法获取数据");
             }
 
-            front++;
-            return arr[front];
+            // 这里需要分析出 front 是指向队列的第一个元素
+            // 1 先把 front 对应的值保存到临时变量
+            // 2 将 front 后移，考虑取模
+            // 3 将临时变量返回
+            final int tmp = arr[front];
+            front = (front + 1) % maxSize;
+            return tmp;
         }
 
         /*
-         * 显示队列的所有数据
+         * 显示队列的所有数据，从 front 开始遍历
          */
         public void printQueue() {
-            System.out.println(Arrays.toString(arr));
+            for (int i = front; i < front + size(); i++) {
+                System.out.printf("arr[%d] = %d\n", i % maxSize, arr[i % maxSize]);
+            }
+        }
+
+        /*
+         * 显示当前队列的有效数据个数
+         */
+        public int size() {
+            return (rear + maxSize - front) % maxSize;
         }
 
         /*
@@ -96,7 +111,7 @@ public class ArrayQueue {
                 throw new RuntimeException("队列为空，没有数据");
             }
 
-            return arr[front + 1];
+            return arr[front];
         }
     }
 }
