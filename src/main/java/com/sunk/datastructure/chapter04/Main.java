@@ -3,29 +3,17 @@ package com.sunk.datastructure.chapter04;
 public class Main {
 
     public static void main(String[] args) {
-        testSingleLinkedList2();
+        testSingleLinkedList();
+
+        System.out.println("\n\n\n----------\n\n\n");
+
+        doubleLinkedListTest();
     }
 
+    /*
+     * 单向链表测试
+     */
     public static void testSingleLinkedList() {
-        // 进行测试
-        // 1 创建节点
-        final SingleLinkedList.HeroNode node1 = new SingleLinkedList.HeroNode(1, "宋江", "及时雨");
-        final SingleLinkedList.HeroNode node2 = new SingleLinkedList.HeroNode(2, "卢俊义", "玉麒麟");
-        final SingleLinkedList.HeroNode node3 = new SingleLinkedList.HeroNode(3, "吴用", "智多星");
-        final SingleLinkedList.HeroNode node4 = new SingleLinkedList.HeroNode(4, "林冲", "豹子头");
-
-        // 2 创建链表
-        final SingleLinkedList linkedList = new SingleLinkedList();
-        linkedList.add(node1);
-        linkedList.add(node3);
-        linkedList.add(node4);
-        linkedList.add(node2);
-
-        // 3 打印链表
-        linkedList.list();
-    }
-
-    public static void testSingleLinkedList2() {
         // 进行测试
         // 1 创建节点
         final SingleLinkedList.HeroNode node1 = new SingleLinkedList.HeroNode(1, "宋江", "及时雨");
@@ -71,6 +59,38 @@ public class Main {
         linkedList.reverseList();
         System.out.println("==================== 反转2");
         linkedList.reverseListIter(linkedList.firstNode());
+    }
+
+
+    public static void doubleLinkedListTest() {
+        // 进行测试
+        final DoubleLinkedList.HeroNode node1 = new DoubleLinkedList.HeroNode(1, "宋江", "及时雨");
+        final DoubleLinkedList.HeroNode node2 = new DoubleLinkedList.HeroNode(2, "卢俊义", "玉麒麟");
+        final DoubleLinkedList.HeroNode node3 = new DoubleLinkedList.HeroNode(3, "吴用", "智多星");
+        final DoubleLinkedList.HeroNode node4 = new DoubleLinkedList.HeroNode(4, "林冲", "豹子头");
+
+        // 创建双向链表
+        final DoubleLinkedList doubleLinkedList = new DoubleLinkedList();
+
+        doubleLinkedList.add(node1);
+        doubleLinkedList.add(node2);
+        doubleLinkedList.add(node3);
+        doubleLinkedList.add(node4);
+
+        // 打印链表
+        System.out.println("============================");
+        doubleLinkedList.list();
+
+        // 修改测试
+        final DoubleLinkedList.HeroNode nodeUpdate = new DoubleLinkedList.HeroNode(4, "公孙胜", "入云龙");
+        doubleLinkedList.update(nodeUpdate);
+        System.out.println("============================");
+        doubleLinkedList.list();
+
+        // 删除测试
+        System.out.println("============================");
+        doubleLinkedList.deleteNode(3);
+        doubleLinkedList.list();
     }
 
 }
