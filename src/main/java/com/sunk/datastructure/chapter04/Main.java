@@ -98,6 +98,9 @@ public class Main {
         // 打印环形链表
         circleSingleLinkedList.list();
 
+        // 测试小孩出圈
+        circleSingleLinkedList.countBoy(1, 2, 5);
+
     }
 
 }

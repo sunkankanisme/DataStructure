@@ -61,6 +61,49 @@ public class CircleSingleLinkedList {
         } while (curr != first);
     }
 
+    /**
+     * 根据用户的输入，计算出圈的顺序
+     *
+     * @param startNo 从第几个小孩开始数数
+     * @param countNo 数几下
+     * @param nums    最初有几个小孩
+     */
+    public void countBoy(int startNo, int countNo, int nums) {
+        // 先对数据进行校验
+        if (first == null || startNo < 1 || startNo > nums) {
+            System.out.println("参数输入有误，请重新输入");
+            return;
+        }
+
+        // 1 创建辅助指针，将 helper 指向环形链表最后的节点
+        Boy helper = first;
+        while (helper.next != first) {
+            helper = helper.next;
+        }
+
+        // 2 报数前，先数 k 个元素，代码中循环 k - 1 次，因为第一个小孩也会报一次数
+        for (int i = 0; i < startNo - 1; i++) {
+            first = first.next;
+            helper = helper.next;
+        }
+
+        // 3 从当前位置开始报数，然后出圈，只剩最后一个终止
+        while (first.next != first) {
+            for (int i = 0; i < countNo - 1; i++) {
+                first = first.next;
+                helper = helper.next;
+            }
+
+            // 4 此时 first 指向的就是出圈的节点
+            System.out.printf("小孩 %d 出圈\n", first.no);
+            first = first.next;
+            helper.next = first;
+        }
+
+        // 5 将最后一个节点出圈
+        System.out.printf("小孩 %d 出圈\n", first.no);
+    }
+
 
     static class Boy {
         private int no;
