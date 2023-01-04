@@ -73,4 +73,11 @@ public class ArrayStack<T> {
             System.out.printf("stack [%d] = %s\n", i, stack[i]);
         }
     }
+
+    /*
+     * 偷看栈顶的值
+     */
+    public T peek() {
+        return (T) stack[top];
+    }
 }
