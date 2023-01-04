@@ -10,7 +10,7 @@ public class Calculator {
         // 表达式
         // 1 + 2 * 2 * 3 - 2 = ？
         // String expression = "300 / 10 + 3 * 2 * 6 - 20";
-        String expression = "2 * 3 + 3 * 2 - 20 * 2";
+        String expression = "6 - 6 * 6 - 6";
 
         // 创建两个栈
         final ArrayStack<Integer> numStack = new ArrayStack<>(10);
@@ -28,9 +28,15 @@ public class Calculator {
         // 开始循环扫描表达式，依次得到 expression 的字符
         final char[] chars = expression.replace(" ", "").toCharArray();
         for (int i = 0; i < chars.length; i++) {
-            final char currentChar = chars[i];
+            char currentChar = chars[i];
             // 判断当前字符是什么，然后做处理
             if (isOper(currentChar)) {
+                // 在此处将表达式中的 "-" 转换为 "+" 将减号作为负号解决 Bug
+                if (currentChar == '-') {
+                    currentChar = '+';
+                    keepNum.append("-");
+                }
+
                 // 是运算符的话，判断当前符号栈是否为空
                 if (operStack.isEmpty()) {
                     // 为空，当前运算符直接入栈
@@ -60,6 +66,7 @@ public class Calculator {
                     keepNum.append(chars[++i]);
                 }
 
+                System.out.println("数字解析：" + keepNum);
                 numStack.push(Integer.valueOf(keepNum.toString()));
                 keepNum = new StringBuilder();
             }
