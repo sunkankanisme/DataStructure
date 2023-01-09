@@ -4,7 +4,7 @@ package com.sunk.datastructure.chapter06;
  * @author sunk
  * @since 2023/1/6
  **/
-public class Queue8 {
+public class Queen8 {
 
     // 表示有多少个皇后
     static int max = 8;
