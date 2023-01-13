@@ -10,7 +10,9 @@ public class QuickSort {
 
     public static void main(String[] args) {
         int[] arr = {8, 9, 1, 7, 2, 3, 5, 4, 6, 5};
-        sort(arr, 0, arr.length - 1);
+        sortAll(arr, 0, arr.length - 1);
+
+        System.out.println(Arrays.toString(arr));
     }
 
     /*
@@ -57,5 +59,38 @@ public class QuickSort {
         if (right > left) {
             sort(arr, l, right);
         }
+    }
+
+
+    public static void sortAll(int[] arr, int left, int right) {
+        if (left >= right) return;
+
+        int p = sortOnce(arr, left, right);
+        sortAll(arr, left, p - 1);
+        sortAll(arr, p + 1, right);
+    }
+
+
+    public static int sortOnce(int[] arr, int left, int right) {
+        int pivot = arr[right];
+
+        int i = left;
+        int j = right;
+
+        while (i < j) {
+            while (i < j && arr[i] < pivot) {
+                i++;
+            }
+
+            while (i < j && arr[j] >= pivot) {
+                j--;
+            }
+
+            Swap.swap(arr, i, j);
+        }
+
+        Swap.swap(arr, i, right);
+
+        return i;
     }
 }
