@@ -46,6 +46,14 @@ public class Main {
         System.out.println("====== 后序遍历查找");
         System.out.println(tree.postOrderSearch(5));
 
+
+        // 删除
+        System.out.println("====== 删除前");
+        tree.preOrder();                        // 1,2,3,5,4
+        tree.delNode(5);
+        System.out.println("====== 删除后");
+        tree.preOrder();                        // 1,2,3,4
+
     }
 
 }
