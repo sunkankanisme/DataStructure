@@ -78,6 +78,23 @@ public class BinaryTree {
         }
     }
 
+    public void delNode2(int no) {
+        if (root != null) {
+            if (root.no == no) {
+                if (root.left == null && root.right == null) {
+                    root = null;
+                } else if (root.left != null) {
+                    root = root.left;
+                } else {
+                    root = root.right;
+                }
+
+            } else {
+                root.delNode2(no);
+            }
+        }
+    }
+
     /*
      * 创建节点对象
      */
@@ -253,6 +270,46 @@ public class BinaryTree {
             if (this.right != null) {
                 this.right.delNode(no);
             }
+        }
+
+
+        public void delNode2(int no) {
+            if (this.left != null && this.left.no == no) {
+                if (this.left.left == null && this.left.right == null) {
+                    // 左右都为 null 则直接删除
+                    this.left = null;
+                } else if (this.left.left != null) {
+                    // 优先选择左边继承父节点位置
+                    // 此处包含左右都不为空或左不为空右为空
+                    this.left = this.left.left;
+                } else {
+                    // 此处左为空右不为空使用右边继承父节点位置
+                    this.left = this.left.right;
+                }
+            }
+
+            if (this.right != null && this.right.no == no) {
+                if (this.right.left == null && this.right.right == null) {
+                    // 左右都为 null 则直接删除
+                    this.right = null;
+                } else if (this.right.left != null) {
+                    // 优先选择左边继承父节点位置
+                    // 此处包含左右都不为空或左不为空右为空
+                    this.right = this.right.left;
+                } else {
+                    // 此处左为空右不为空使用右边继承父节点位置
+                    this.right = this.right.right;
+                }
+            }
+
+            if (this.left != null) {
+                this.left.delNode2(no);
+            }
+
+            if (this.right != null) {
+                this.right.delNode2(no);
+            }
+
         }
     }
 

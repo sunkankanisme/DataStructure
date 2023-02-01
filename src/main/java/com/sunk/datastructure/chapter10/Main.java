@@ -54,6 +54,12 @@ public class Main {
         System.out.println("====== 删除后");
         tree.preOrder();                        // 1,2,3,4
 
+        // 删除 2
+        System.out.println("====== 删除前 2");
+        tree.preOrder();
+        tree.delNode2(3);
+        System.out.println("====== 删除后 2");
+        tree.preOrder();
     }
 
 }
