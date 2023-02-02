@@ -37,6 +37,10 @@ public class ThreadedBinaryTreeDemo {
         // 测试
         System.out.println(node5.getLeft());
         System.out.println(node5.getRight());
+
+        // 测试遍历 - 使用线索化的方式
+        System.out.println("======================");
+        threadedBinaryTree.threadedList();
     }
 
 
@@ -84,6 +88,36 @@ public class ThreadedBinaryTreeDemo {
 
             // 3 线索化右子树
             threadedNodes(node.getRight());
+        }
+
+        /*
+         * 遍历中序线索化二叉树
+         */
+        public void threadedList() {
+            // 定义一个变量，存储当前遍历的节点，从 root 开始
+            HeroNode2 node = root;
+
+            while (node != null) {
+                // 找到 left type = 1 的节点，即中序遍历的第一个节点
+                // 后面随着遍历而变化，因为 leftType = 1 时，说明该节点是按照线索化处理后的有效节点
+                while (node.getLeftType() == 0) {
+                    node = node.left;
+                }
+
+                // 打印当前节点
+                System.out.println(node);
+
+                // 如果当前节点的右指针是后继节点，则一直输出
+                while (node.getRightType() == 1) {
+                    final HeroNode2 next = node.right;
+                    System.out.println(next);
+
+                    node = node.right;
+                }
+
+                // 当右指针不存在后继节点的时候，替换遍历的节点
+                node = node.right;
+            }
         }
     }
 }
