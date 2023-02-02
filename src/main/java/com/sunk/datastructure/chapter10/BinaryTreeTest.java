@@ -4,17 +4,17 @@ package com.sunk.datastructure.chapter10;
  * @author sunk
  * @since 2023/2/1
  **/
-public class Main {
+public class BinaryTreeTest {
 
     public static void main(String[] args) {
         // 创建二叉树
         final BinaryTree tree = new BinaryTree();
 
         // 创建节点
-        final BinaryTree.HeroNode node1 = new BinaryTree.HeroNode(1, "宋江");
-        final BinaryTree.HeroNode node2 = new BinaryTree.HeroNode(2, "吴用");
-        final BinaryTree.HeroNode node3 = new BinaryTree.HeroNode(3, "卢俊义");
-        final BinaryTree.HeroNode node4 = new BinaryTree.HeroNode(4, "林冲");
+        final HeroNode node1 = new HeroNode(1, "宋江");
+        final HeroNode node2 = new HeroNode(2, "吴用");
+        final HeroNode node3 = new HeroNode(3, "卢俊义");
+        final HeroNode node4 = new HeroNode(4, "林冲");
 
         /*
          * 挂载节点
@@ -37,7 +37,7 @@ public class Main {
         tree.postOrder();               // 2,3,4,1
 
         // 查找
-        final BinaryTree.HeroNode node5 = new BinaryTree.HeroNode(5, "关胜");
+        final HeroNode node5 = new HeroNode(5, "关胜");
         node3.setLeft(node5);
         System.out.println("====== 前序遍历查找");
         System.out.println(tree.preOrderSearch(5));
