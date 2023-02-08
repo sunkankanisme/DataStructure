@@ -1,5 +1,6 @@
 package com.sunk.datastructure.chapter10.huffman;
 
+import java.io.*;
 import java.util.*;
 
 /**
@@ -19,14 +20,87 @@ public class HuffmanDataCompress {
         final byte[] bytes = str.getBytes();
         final byte[] compressedBytes = huffmanCompress(bytes);
         // 由 40 压缩为 17，压缩率为 (40 - 17) / 40
-        System.out.println("原始大小 " + bytes.length + ", 压缩后大小 " + compressedBytes.length);
+        // System.out.println("原始大小 " + bytes.length + ", 压缩后大小 " + compressedBytes.length);
 
         /*
          * 解码过程
          */
         final byte[] source = decode(huffmanCodeMap, compressedBytes);
-        System.out.println(new String(source));
+        // System.out.println(new String(source));
+
+        /*
+         * 文件压缩
+         */
+        String srcFile = "C:\\Users\\sunk\\Downloads\\dingtalk_downloader.exe";
+        String destFile = "C:\\Users\\sunk\\Downloads\\dingtalk_downloader.exe.zip";
+        zipFile(srcFile, destFile);
+
+        /*
+         * 文件解压
+         */
+
     }
+
+    /*
+     * =================================== 文件压缩 ===================================
+     */
+
+    /**
+     * 压缩文件
+     *
+     * @param srcPath  文件原路径
+     * @param destFile 文件目标路径
+     **/
+    public static void zipFile(String srcPath, String destFile) {
+        FileInputStream is = null;
+        FileOutputStream os = null;
+        ObjectOutputStream oos = null;
+
+        try {
+            // 1 创建输入流
+            is = new FileInputStream(srcPath);
+            final byte[] bytes = new byte[is.available()];
+
+            // 2 读取文件加载到数组
+            is.read(bytes);
+
+            // 3 直接对源文件进行压缩
+            final byte[] huffmanCompress = huffmanCompress(bytes);
+
+            // 4 创建文件输出流
+            os = new FileOutputStream(destFile);
+            oos = new ObjectOutputStream(os);
+
+            // 5 输出压缩后的数据
+            // 这里直接将压缩后的数组进行输出，同时需要将编码写出去，以便恢复文件
+            oos.writeObject(huffmanCompress);
+            oos.writeObject(huffmanCodeMap);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            try {
+                os.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            try {
+                oos.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
+
+
+
 
     /*
      * =================================== 数据解码 ===================================
@@ -48,7 +122,7 @@ public class HuffmanDataCompress {
             builder.append(byteToBitString(!flag, huffmanBytes[i]));
         }
 
-        System.out.println(builder);
+        // System.out.println(builder);
 
         // 2 翻转编码表 kv
         final HashMap<String, Byte> reverseCodes = new HashMap<>();
@@ -56,7 +130,7 @@ public class HuffmanDataCompress {
             reverseCodes.put(entry.getValue(), entry.getKey());
         }
 
-        System.out.println(reverseCodes);
+        // System.out.println(reverseCodes);
 
         // 3 把字符串按照 huffman 反向编码表进行解码
         final ArrayList<Byte> arrayList = new ArrayList<>();
@@ -71,7 +145,7 @@ public class HuffmanDataCompress {
             }
         }
 
-        System.out.println(arrayList);
+        // System.out.println(arrayList);
 
         final byte[] bytes = new byte[arrayList.size()];
         for (int i = 0; i < arrayList.size(); i++) {
@@ -119,7 +193,7 @@ public class HuffmanDataCompress {
         // --- 1 讲字符串转换为字节数组
         // final byte[] strBytes = str.getBytes();
         // 40
-        System.out.println(strBytes.length);
+        // System.out.println(strBytes.length);
 
         // --- 2 将字节数组按照权重信息，生成对应的节点集合
         final List<DataNode> nodes = getNodes(strBytes);
@@ -129,7 +203,7 @@ public class HuffmanDataCompress {
         //  DataNode{data=105, weight=5}, DataNode{data=121, weight=1},
         //  DataNode{data=106, weight=2}, DataNode{data=107, weight=4},
         //  DataNode{data=108, weight=4}, DataNode{data=111, weight=2}]
-        System.out.println(nodes);
+        // System.out.println(nodes);
 
         // --- 3 将节点集合按照权重生成相应的赫夫曼树
         final DataNode huffmanTree = createHuffmanTree(nodes);
@@ -138,12 +212,12 @@ public class HuffmanDataCompress {
         // --- 4 根据赫夫曼树生成相应的编码
         final Map<Byte, String> codes = getCodes(huffmanTree);
         // {32=01, 97=100, 100=11000, 117=11001, 101=1110, 118=11011, 105=101, 121=11010, 106=0010, 107=1111, 108=000, 111=0011}
-        System.out.println(codes);
+        // System.out.println(codes);
 
         // --- 5 使用赫夫曼编码生成对应的数据
         final byte[] zipedBytes = zip(strBytes, codes);
         // [-88, -65, -56, -65, -56, -65, -55, 77, -57, 6, -24, -14, -117, -4, -60, -90, 28]
-        System.out.println(Arrays.toString(zipedBytes));
+        // System.out.println(Arrays.toString(zipedBytes));
 
         return zipedBytes;
     }
@@ -165,7 +239,7 @@ public class HuffmanDataCompress {
         // 10101000101111111100100010111111110010001011111111 \
         // 00100101001101110001110000011011101000111100101000 \
         // 101111111100110001001010011011100
-        System.out.println(builder);
+        // System.out.println(builder);
 
         // 2 将编码字符串进行压缩，转换为 byte 数组
         // 2.1 计算新数组的长度 [ len = (builder.length() + 7) / 8 ]
@@ -317,7 +391,7 @@ public class HuffmanDataCompress {
         }
 
         public void preOrder() {
-            System.out.println(this);
+            // System.out.println(this);
 
             if (this.left != null) {
                 this.left.preOrder();
