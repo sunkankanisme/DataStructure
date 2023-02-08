@@ -31,19 +31,49 @@ public class HuffmanDataCompress {
         /*
          * 文件压缩
          */
-        String srcFile = "C:\\Users\\sunk\\Downloads\\dingtalk_downloader.exe";
-        String destFile = "C:\\Users\\sunk\\Downloads\\dingtalk_downloader.exe.zip";
-        zipFile(srcFile, destFile);
+        // String srcFile = "C:\\Users\\sunk\\Downloads\\dingtalk_downloader.exe";
+        // String destFile = "C:\\Users\\sunk\\Downloads\\dingtalk_downloader.exe.zip";
+        // zipFile(srcFile, destFile);
 
         /*
          * 文件解压
          */
-
+        String destFile = "C:\\Users\\sunk\\Downloads\\dingtalk_downloader.exe.zip";
+        String unzipFile = "C:\\Users\\sunk\\Downloads\\dingtalk_downloader_unzip.exe";
+        unzipFile(destFile, unzipFile);
     }
 
     /*
      * =================================== 文件压缩 ===================================
      */
+
+    /**
+     * 解压文件
+     *
+     * @param zipedFile 压缩的文件
+     * @param destPath  解压到哪里
+     **/
+    public static void unzipFile(String zipedFile, String destPath) {
+        try (final FileInputStream is = new FileInputStream(zipedFile);
+             final ObjectInputStream ois = new ObjectInputStream(is);
+             final FileOutputStream os = new FileOutputStream(destPath)
+        ) {
+
+            // 读取数据
+            final byte[] huffmanBytes = (byte[]) ois.readObject();
+            // 读取编码表
+            final Map<Byte, String> codes = (Map<Byte, String>) ois.readObject();
+
+            // 解码
+            final byte[] decode = decode(codes, huffmanBytes);
+
+            // 输出数据到文件
+            os.write(decode);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * 压缩文件
