@@ -66,7 +66,7 @@ public class BinarySortTree {
             return;
         }
 
-        // 查找要删除的节点的父节点
+        // 查找要删除的节点的父节点，TODO 这里有问题，相当于直接把整棵树置空了
         final Node parentNode = searchParent(value);
         // 没有找到目标节点的父节点
         if (parentNode == null) {
