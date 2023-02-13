@@ -1,5 +1,7 @@
 package com.sunk.datastructure.chapter10;
 
+import java.util.Arrays;
+
 import static com.sunk.datastructure.chapter07.Swap.swap;
 
 /**
@@ -9,11 +11,11 @@ import static com.sunk.datastructure.chapter07.Swap.swap;
 public class HeapSort {
 
     public static void main(String[] args) {
-        // int[] arr = {4, 6, 8, 5, 9, 20};
-        int[] arr = new int[100000000];
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = (int) (Math.random() * 8000000);
-        }
+        int[] arr = {4, 6, 8, 5, 9, 20};
+        // int[] arr = new int[100000000];
+        // for (int i = 0; i < arr.length; i++) {
+        //     arr[i] = (int) (Math.random() * 8000000);
+        // }
 
         final long startSecond = System.currentTimeMillis() / 1000;
         sort(arr);
@@ -61,7 +63,7 @@ public class HeapSort {
      * @param len 对前多少个元素进行调整
      **/
     public static void adjust(int[] arr, int i, int len) {
-        // System.out.println("ADJUST START:\t" + Arrays.toString(Arrays.copyOf(arr, len)));
+        System.out.print("ADJUST [" + i + "][" + len + "]:\t" + Arrays.toString(Arrays.copyOf(arr, len)) + " -> ");
 
         // 先取出当前元素的值
         int temp = arr[i];
@@ -90,7 +92,7 @@ public class HeapSort {
         // 将 temp 放到调整后的 i 的位置
         arr[i] = temp;
 
-        // System.out.println("ADJUST STOP:\t" + Arrays.toString(Arrays.copyOf(arr, len)));
+        System.out.println("\t" + Arrays.toString(Arrays.copyOf(arr, len)));
     }
 
 }
