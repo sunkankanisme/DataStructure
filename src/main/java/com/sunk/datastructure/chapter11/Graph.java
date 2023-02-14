@@ -40,7 +40,8 @@ public class Graph {
 
         // 测试 bfs
         System.out.println("==== BFS");
-        graph.bfs();
+        // graph.bfs(0);
+        graph.bfs2();
 
     }
 
@@ -216,6 +217,43 @@ public class Graph {
                 bfs(i);
             }
         }
+    }
+
+    /*
+     * 广度优先遍历 BFS
+     */
+    public void bfs2() {
+        // 遍历初始节点
+        int i = 0;
+        System.out.println(getValueByIndex(i));
+        isVisited[i] = true;
+
+        // 创建队列存放出现过的节点
+        final LinkedList<Integer> queue = new LinkedList<>();
+        queue.addLast(i);
+
+        // 队列不为空的情况下就继续遍历
+        while (!queue.isEmpty()) {
+            // 取出队列中的第一个元素，进行所有连接节点的遍历输出
+            final Integer first = queue.removeFirst();
+
+            while (true) {
+                final int neighbor = getUnVisitorNeighbor(first);
+                // 此处打印队列中某个节点的查找过程
+                System.out.println("=== " + first + " -> " + neighbor);
+
+                if (neighbor != -1) {
+                    // 记录访问到的节点
+                    queue.addLast(neighbor);
+                    System.out.println(getValueByIndex(neighbor));
+                    isVisited[neighbor] = true;
+                } else {
+                    // 当前节点已经没有未访问的邻接节点了，跳出循环
+                    break;
+                }
+            }
+        }
+
     }
 
 
