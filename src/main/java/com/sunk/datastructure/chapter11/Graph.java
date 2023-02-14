@@ -35,11 +35,15 @@ public class Graph {
         // 测试 dfs
         // 0 1 2 3 4
         // A B C D E
-        // System.out.println("==== DFS");
-        // graph.dfs2(0);
+        System.out.println("-----------------------------");
+        System.out.println("------------ DFS ------------");
+        System.out.println("-----------------------------");
+        graph.dfs2();
 
         // 测试 bfs
-        System.out.println("==== BFS");
+        System.out.println("-----------------------------");
+        System.out.println("------------ BFS ------------");
+        System.out.println("-----------------------------");
         // graph.bfs(0);
         graph.bfs2();
 
@@ -55,7 +59,7 @@ public class Graph {
     private int numOfEdges;
 
     // 定义一个数组，记录某个节点是否被访问过
-    private final boolean[] isVisited;
+    private boolean[] isVisited;
 
     /**
      * 构建图
@@ -66,7 +70,6 @@ public class Graph {
         // 初始化矩阵和 list
         edges = new int[n][n];
         vertexList = new ArrayList<>(n);
-        isVisited = new boolean[n];
     }
 
     /**
@@ -123,6 +126,8 @@ public class Graph {
      * 对 dfs 进行重载，遍历所有的节点，进行 dfs
      */
     public void dfs() {
+        isVisited = new boolean[getNumOfVertex()];
+
         for (int i = 0; i < getNumOfVertex(); i++) {
             if (!isVisited[i]) {
                 dfs(i);
@@ -143,11 +148,12 @@ public class Graph {
      * 注：如果存在独立的节点（不与任何节点相邻的节点）则需要循环传入每一个节点进行查找类似于 dfs()
      */
     public void dfs2(int i) {
-        System.out.print(vertexList.get(i) + " ");
+        System.out.println(vertexList.get(i) + " ");
         isVisited[i] = true;
 
         while (true) {
             final int unVisitorNeighbor = getUnVisitorNeighbor(i);
+            System.out.println("=== " + i + " -> " + unVisitorNeighbor);
 
             if (unVisitorNeighbor != -1) {
                 dfs2(unVisitorNeighbor);
@@ -155,8 +161,11 @@ public class Graph {
                 break;
             }
         }
+    }
 
-        System.out.println();
+    public void dfs2() {
+        isVisited = new boolean[getNumOfVertex()];
+        dfs2(0);
     }
 
     // 获取指定节点未被访问的子节点
@@ -212,6 +221,8 @@ public class Graph {
     }
 
     public void bfs() {
+        isVisited = new boolean[getNumOfVertex()];
+
         for (int i = 0; i < getNumOfVertex(); i++) {
             if (!isVisited[i]) {
                 bfs(i);
@@ -223,6 +234,8 @@ public class Graph {
      * 广度优先遍历 BFS
      */
     public void bfs2() {
+        isVisited = new boolean[getNumOfVertex()];
+
         // 遍历初始节点
         int i = 0;
         System.out.println(getValueByIndex(i));
