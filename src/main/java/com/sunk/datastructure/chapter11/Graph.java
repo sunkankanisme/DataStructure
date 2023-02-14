@@ -2,6 +2,7 @@ package com.sunk.datastructure.chapter11;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 /**
  * 使用邻接矩阵实现图
@@ -34,7 +35,12 @@ public class Graph {
         // 测试 dfs
         // 0 1 2 3 4
         // A B C D E
-        graph.dfs2(0);
+        // System.out.println("==== DFS");
+        // graph.dfs2(0);
+
+        // 测试 bfs
+        System.out.println("==== BFS");
+        graph.bfs();
 
     }
 
@@ -148,6 +154,8 @@ public class Graph {
                 break;
             }
         }
+
+        System.out.println();
     }
 
     // 获取指定节点未被访问的子节点
@@ -159,6 +167,55 @@ public class Graph {
         }
 
         return -1;
+    }
+
+    /*
+     * 广度优先遍历 BFS
+     */
+    public void bfs(int i) {
+        // 表示队列的头节点的下标
+        int u;
+        // 表示邻接节点
+        int w;
+
+        // 创建一个节点访问队列，记录节点访问的顺序
+        final LinkedList<Integer> queue = new LinkedList<>();
+
+        // 访问当前节点，标记为已访问
+        System.out.print(getValueByIndex(i) + " ->");
+        isVisited[i] = true;
+
+        // 将节点加入队列
+        queue.addLast(i);
+
+        while (!queue.isEmpty()) {
+            // 取出队列的头节点下标
+            u = queue.removeFirst();
+            // 得到 u 的第一个邻接节点下标
+            w = getFirstNeighbor(u);
+
+            while (w != -1) {
+                if (!isVisited[w]) {
+                    System.out.print(getValueByIndex(w) + " ->");
+                    isVisited[w] = true;
+
+                    queue.addLast(w);
+                }
+
+                // 以 u 为前驱点，找下一个邻接节点
+                w = getNextNeighbor(u, w);
+            }
+        }
+
+        System.out.println();
+    }
+
+    public void bfs() {
+        for (int i = 0; i < getNumOfVertex(); i++) {
+            if (!isVisited[i]) {
+                bfs(i);
+            }
+        }
     }
 
 
